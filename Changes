@@ -1,5 +1,8 @@
 Revision history for Perl module Data::Page:
 
+0.17 Mon May  5 16:12:58 BST 2003
+	- work around for makemaker and Build.PL interaction
+
 0.16 Sun May  4 11:02:33 BST 2003
 	- New entries_on_this_page thanks to Dominic Mitchell
 
