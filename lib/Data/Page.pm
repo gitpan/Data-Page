@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 =head1 NAME
 
@@ -255,6 +255,7 @@ on the current page.
 sub splice {
   my ($self, $array) = @_;
   my $top = @$array > $self->last ? $self->last : @$array;
+  return () if $top == 0; # empty
   return @{$array}[ $self->first - 1 .. $top - 1 ];
 }
 

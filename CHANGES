@@ -1,5 +1,10 @@
 Revision history for Perl module Data::Page:
 
+1.01 Wed Nov 19 10:09:48 GMT 2003
+	- fixed bug where splice of an empty array was not working
+	  (spotted by Alex Monney)
+	- moved Changes to CHANGES
+
 1.00 Mon Nov  3 19:41:21 GMT 2003
 	- bumped up to version 1.00 and added NINJA support
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use strict;
-use Test::More tests => 316;
+use Test::More tests => 317;
 use Data::Page;
 ok(1, "Loaded module"); # If we made it this far, we're ok.
 
@@ -39,6 +39,11 @@ foreach my $line (<DATA>) {
   is($integers, $vals[10], "$name: splice");
   is($page->entries_on_this_page, $vals[11], "$name: entries_on_this_page" );
 }
+
+my $page = Data::Page->new(0, 10);
+my @empty;
+my @spliced = $page->splice(\@empty);
+is(scalar(@spliced), 0, "Splice on empty is empty");
 
 # Format of test data: 0=number of entries, 1=entries per page, 2=current page,
 # 3=first page, 4=last page, 5=first entry on page, 6=last entry on page,
