@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 =head1 NAME
 
@@ -181,6 +181,41 @@ sub last {
 }
 
 
+=head2 previous_page
+
+This method returns the previous page number, if one exists. Otherwise
+it returns undefined.
+
+  if ($page->previous_page) {
+    print "Previous page number: ", $page->previous_page, "\n";
+  }
+
+=cut
+
+sub previous_page {
+  my $self = shift;
+
+  $self->{CURRENT_PAGE} > 1 ? $self->{CURRENT_PAGE} - 1 : undef;
+}
+
+
+=head2 next_page
+
+This method returns the next page number, if one exists. Otherwise
+it returns undefined.
+
+  if ($page->next_page) {
+    print "Next page number: ", $page->next_page, "\n";
+  }
+
+=cut
+
+sub next_page {
+  my $self = shift;
+
+  $self->{CURRENT_PAGE} < $self->last_page ? $self->{CURRENT_PAGE} + 1 : undef;
+}
+
 =head1 NOTES
 
 It has been said before that this code is "too simple" for CPAN, but I
@@ -190,12 +225,12 @@ more time getting the rest of their code right...
 
 =head1 AUTHOR
 
-Based on code originally by Leo Lapworth <leo@cuckoo.org>, with many
-changes added by by Leon Brocard <acme@astray.com>.
+Based on code originally by Leo Lapworth, with many changes added by
+by Leon Brocard <acme@astray.com>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2000-1, Leon Brocard
+Copyright (C) 2000-2, Leon Brocard
 
 This module is free software; you can redistribute it or modify it
 under the same terms as Perl itself.
