@@ -1,5 +1,8 @@
 Revision history for Perl module Data::Page:
 
+0.16 Sun May  4 11:02:33 BST 2003
+	- New entries_on_this_page thanks to Dominic Mitchell
+
 0.15 Tue Feb 11 11:15:06 GMT 2003
 	- do the right thing with zero entries
 

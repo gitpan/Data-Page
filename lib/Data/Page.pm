@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 =head1 NAME
 
@@ -95,6 +95,25 @@ sub entries_per_page {
   my $self = shift;
 
   return $self->{ENTRIES_PER_PAGE};
+}
+
+
+=head2 entries_on_this_page
+
+This methods returns the number of entries on the current page.
+
+  print "There are ", $page->entries_on_this_page, " entries displayed\n";
+
+=cut
+
+sub entries_on_this_page {
+  my $self = shift;
+
+  if ($self->total_entries == 0) {
+    return 0;
+  } else {
+    return $self->last - $self->first + 1;
+  }
 }
 
 

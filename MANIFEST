@@ -1,6 +1,11 @@
+Build.PL
 Changes
 Makefile.PL
 MANIFEST
-Page.pm
+MANIFEST.SKIP
+META.yml
 README
+SIGNATURE
+lib/Data/Page.pm
+t/signature.t
 t/simple.t
