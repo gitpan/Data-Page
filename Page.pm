@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.13';
+$VERSION = '0.14';
 
 =head1 NAME
 
@@ -214,6 +214,24 @@ sub next_page {
   my $self = shift;
 
   $self->{CURRENT_PAGE} < $self->last_page ? $self->{CURRENT_PAGE} + 1 : undef;
+}
+
+=head2 splice
+
+This method takes in an listref, and returns only the values which are
+on the current page.
+
+  @visible_holidays = $page->splice(\@holidays);
+
+=cut
+
+sub splice {
+  my $self = shift;
+  my @values = @{(shift)};
+
+  @values = splice(@values, $self->first - 1, $self->entries_per_page);
+
+  return @values;
 }
 
 =head1 NOTES
