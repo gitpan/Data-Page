@@ -1,0 +1,9 @@
+Revision history for Perl module Data::Page:
+
+0.12 Tue Aug 28 12:52:48 2001
+	- Finally released to CPAN
+0.02 2000-11-03
+	- Made into an OO module (+ many changes) by Leon Brocard
+0.01 2001-11-02
+	- Created by Leo Lapworth
+
