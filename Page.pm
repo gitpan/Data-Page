@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.14';
+$VERSION = '0.15';
 
 =head1 NAME
 
@@ -158,7 +158,11 @@ This method returns the number of the first entry on the current page.
 sub first {
   my $self = shift;
 
-  return (($self->current_page - 1) * $self->entries_per_page) + 1;
+  if ($self->total_entries == 0) {
+    return 0;
+  } else {
+    return (($self->current_page - 1) * $self->entries_per_page) + 1;
+  }
 }
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use strict;
-use Test::More tests => 273;
+use Test::More tests => 281;
 use Data::Page;
 ok(1, "Loaded module"); # If we made it this far, we're ok.
 
@@ -25,18 +25,18 @@ foreach my $line (<DATA>) {
 #  warn "First entry on page: ", $page->first, "\n";
 #  warn " Last entry on page: ", $page->last, "\n";
 
+  is($page->first_page, $vals[3], "$name: first page");
+  is($page->last_page, $vals[4], "$name: last page");
+  is($page->first, $vals[5], "$name: first");
+  is($page->last, $vals[6], "$name: last");
+  is($page->previous_page, $vals[7], "$name: previous_page");
+  is($page->current_page, $vals[8], "$name: current_page");
+  is($page->next_page, $vals[9], "$name: next_page");
+
   my @integers = (0..$vals[0]);
   @integers = $page->splice(\@integers);
   my $integers = join ',', @integers;
-
-  is($vals[3], $page->first_page, "$name: first page");
-  is($vals[4], $page->last_page, "$name: last page");
-  is($vals[5], $page->first, "$name: first");
-  is($vals[6], $page->last, "$name: last");
-  is($vals[7], $page->previous_page, "$name: previous_page");
-  is($vals[8], $page->current_page, "$name: current_page");
-  is($vals[9], $page->next_page, "$name: next_page");
-  is($vals[10], $integers, "$name: splice");
+  is($integers, $vals[10], "$name: splice");
 }
 
 __DATA__
@@ -83,3 +83,6 @@ __DATA__
 23 10 1    1 3 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9
 23 10 2    1 3 11 20 1 2 3 10,11,12,13,14,15,16,17,18,19
 23 10 3    1 3 21 23 2 3 undef 20,21,22,23
+
+# Zero test
+0 10 1    1 0 0 0 undef 0 undef 0
