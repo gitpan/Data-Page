@@ -97,6 +97,15 @@ METHODS
 
       @visible_holidays = $page->splice(\@holidays);
 
+  skipped
+    This method is useful paging through data in a database using SQL LIMIT
+    clauses. It is simple $page->first - 1.
+
+      $sth = $dbh->prepare(
+        q{SELECT * FROM table ORDER BY rec_date LIMIT ?, ?}
+      );
+      $sth->execute($date, $page->skipped, $page->entries_per_page);
+
 NOTES
     It has been said before that this code is "too simple" for CPAN, but I
     must disagree. I have seen people write this kind of code over and over

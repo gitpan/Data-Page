@@ -1,10 +1,10 @@
 #!/usr/bin/perl -wT
 
 use strict;
-use Test::More tests => 353;
+use Test::More tests => 388;
 
 BEGIN {
-    use_ok( 'Data::Page' );
+  use_ok( 'Data::Page' );
 }
 
 my $name;
@@ -36,6 +36,8 @@ foreach my $line (<DATA>) {
   my $integers = join ',', @integers;
   is($integers, $vals[10], "$name: splice");
   is($page->entries_on_this_page, $vals[11], "$name: entries_on_this_page" );
+
+  is($page->skipped, $vals[5] - 1, "$name: skipped");
 }
 
 my $page = Data::Page->new(0, 10);

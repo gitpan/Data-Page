@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '1.02';
+$VERSION = '1.03';
 
 =head1 NAME
 
@@ -256,6 +256,24 @@ sub splice {
   my $top = @$array > $self->last ? $self->last : @$array;
   return () if $top == 0; # empty
   return @{$array}[ $self->first - 1 .. $top - 1 ];
+}
+
+=head2 skipped
+
+This method is useful paging through data in a database using SQL
+LIMIT clauses. It is simple $page->first - 1.
+
+  $sth = $dbh->prepare(
+    q{SELECT * FROM table ORDER BY rec_date LIMIT ?, ?}
+  );
+  $sth->execute($date, $page->skipped, $page->entries_per_page);
+
+=cut
+
+sub skipped {
+  my $self = shift;
+
+  return $self->first - 1;
 }
 
 =head1 NOTES

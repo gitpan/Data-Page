@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Data-Page
-version: 1.02
+version: 1.03
 author:
   - |-
     Based on code originally by Leo Lapworth, with many changes added by
@@ -12,5 +12,5 @@ requires:
 provides:
   Data::Page:
     file: lib/Data/Page.pm
-    version: 1.02
+    version: 1.03
 generated_by: Module::Build version 0.25
