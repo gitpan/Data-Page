@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.17';
+$VERSION = '0.18';
 
 =head1 NAME
 
@@ -159,10 +159,11 @@ This method returns the total number of pages of information.
 sub last_page {
   my $self = shift;
 
-  my $last_page = int($self->total_entries / $self->entries_per_page) + 1;
-  $last_page-- if int($self->total_entries / $self->entries_per_page) == $self->total_entries / $self->entries_per_page;
-
-  return $last_page;
+  my $pages = $self->total_entries / $self->entries_per_page;
+  
+  return ($pages == int $pages
+	  ? $pages
+	  : 1 + int $pages);
 }
 
 
@@ -241,20 +242,20 @@ sub next_page {
 
 =head2 splice
 
-This method takes in an listref, and returns only the values which are
+This method takes in a listref, and returns only the values which are
 on the current page.
 
   @visible_holidays = $page->splice(\@holidays);
 
 =cut
 
+# This method would probably be better named 'select' or 'slice' or
+# something, because it doesn't modify the array the way
+# CORE::splice() does.
 sub splice {
-  my $self = shift;
-  my @values = @{(shift)};
-
-  @values = splice(@values, $self->first - 1, $self->entries_per_page);
-
-  return @values;
+  my ($self, $array) = @_;
+  my $top = @$array > $self->last ? $self->last : @$array;
+  return @{$array}[ $self->first - 1 .. $top - 1 ];
 }
 
 =head1 NOTES

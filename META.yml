@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Data-Page
-version: 0.17
+version: 0.18
 license: perl
 distribution_type: module
 requires:
@@ -8,4 +8,8 @@ requires:
 recommends: {}
 build_requires: {}
 conflicts: {}
-generated_by: Module::Build version 0.16
+provides:
+  Data::Page:
+    file: lib/Data/Page.pm
+    version: 0.18
+generated_by: Module::Build version 0.19

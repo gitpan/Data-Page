@@ -16,7 +16,7 @@ foreach my $line (<DATA>) {
     next;
   }
 
-  my @vals = map { $_ = undef if $_ eq 'undef'; $_ } split /\s+/, $line;
+  my @vals = map { /^undef$/ ? undef : /^''$/ ? '' : $_ } split /\s+/, $line;
 #  warn $line;
 
   my $page = Data::Page->new(@vals[0,1,2]);
@@ -33,12 +33,16 @@ foreach my $line (<DATA>) {
   is($page->current_page, $vals[8], "$name: current_page");
   is($page->next_page, $vals[9], "$name: next_page");
 
-  my @integers = (0..$vals[0]);
+  my @integers = (0..$vals[0]-1);
   @integers = $page->splice(\@integers);
   my $integers = join ',', @integers;
   is($integers, $vals[10], "$name: splice");
   is($page->entries_on_this_page, $vals[11], "$name: entries_on_this_page" );
 }
+
+# Format of test data: 0=number of entries, 1=entries per page, 2=current page,
+# 3=first page, 4=last page, 5=first entry on page, 6=last entry on page,
+# 7=previous page, 8=current page, 9=next page, 10=current entries, 11=current number of entries
 
 __DATA__
 # Initial test
@@ -49,41 +53,41 @@ __DATA__
 50 10 5    1 5 41 50 4 5 undef 40,41,42,43,44,45,46,47,48,49 10
 
 # Under 10
-1 10 1    1 1 1 1 undef 1 undef 0,1                   1
-2 10 1    1 1 1 2 undef 1 undef 0,1,2                 2
-3 10 1    1 1 1 3 undef 1 undef 0,1,2,3               3
-4 10 1    1 1 1 4 undef 1 undef 0,1,2,3,4             4
-5 10 1    1 1 1 5 undef 1 undef 0,1,2,3,4,5           5
-6 10 1    1 1 1 6 undef 1 undef 0,1,2,3,4,5,6         6
-7 10 1    1 1 1 7 undef 1 undef 0,1,2,3,4,5,6,7       7
-8 10 1    1 1 1 8 undef 1 undef 0,1,2,3,4,5,6,7,8     8
-9 10 1    1 1 1 9 undef 1 undef 0,1,2,3,4,5,6,7,8,9   9
-10 10 1    1 1 1 10 undef 1 undef 0,1,2,3,4,5,6,7,8,9 10
+1 10 1    1 1 1 1 undef 1 undef 0                     1
+2 10 1    1 1 1 2 undef 1 undef 0,1                   2
+3 10 1    1 1 1 3 undef 1 undef 0,1,2                 3
+4 10 1    1 1 1 4 undef 1 undef 0,1,2,3               4
+5 10 1    1 1 1 5 undef 1 undef 0,1,2,3,4             5
+6 10 1    1 1 1 6 undef 1 undef 0,1,2,3,4,5           6
+7 10 1    1 1 1 7 undef 1 undef 0,1,2,3,4,5,6         7
+8 10 1    1 1 1 8 undef 1 undef 0,1,2,3,4,5,6,7       8
+9 10 1    1 1 1 9 undef 1 undef 0,1,2,3,4,5,6,7,8     9
+10 10 1   1 1 1 10 undef 1 undef 0,1,2,3,4,5,6,7,8,9  10
 
 # Over 10
 11 10 1    1 2 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9     10
-11 10 2    1 2 11 11 1 2 undef 10,11                  1
+11 10 2    1 2 11 11 1 2 undef 10                     1
 12 10 1    1 2 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9     10
-12 10 2    1 2 11 12 1 2 undef 10,11,12               2
+12 10 2    1 2 11 12 1 2 undef 10,11                  2
 13 10 1    1 2 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9     10
-13 10 2    1 2 11 13 1 2 undef 10,11,12,13            3
+13 10 2    1 2 11 13 1 2 undef 10,11,12               3
 
 # Under 20
 19 10 1    1 2 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9            10
-19 10 2    1 2 11 19 1 2 undef 10,11,12,13,14,15,16,17,18,19 9
+19 10 2    1 2 11 19 1 2 undef 10,11,12,13,14,15,16,17,18    9
 20 10 1    1 2 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9            10
 20 10 2    1 2 11 20 1 2 undef 10,11,12,13,14,15,16,17,18,19 10
 
 # Over 20
 21 10 1    1 3 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9        10
 21 10 2    1 3 11 20 1 2 3 10,11,12,13,14,15,16,17,18,19 10
-21 10 3    1 3 21 21 2 3 undef 20,21                     1
+21 10 3    1 3 21 21 2 3 undef 20                        1
 22 10 1    1 3 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9        10
 22 10 2    1 3 11 20 1 2 3 10,11,12,13,14,15,16,17,18,19 10
-22 10 3    1 3 21 22 2 3 undef 20,21,22                  2
+22 10 3    1 3 21 22 2 3 undef 20,21                     2
 23 10 1    1 3 1 10 undef 1 2 0,1,2,3,4,5,6,7,8,9        10
 23 10 2    1 3 11 20 1 2 3 10,11,12,13,14,15,16,17,18,19 10
-23 10 3    1 3 21 23 2 3 undef 20,21,22,23               3
+23 10 3    1 3 21 23 2 3 undef 20,21,22                  3
 
 # Zero test
-0 10 1    1 0 0 0 undef 0 undef 0 0
+0 10 1    1 0 0 0 undef 0 undef '' 0

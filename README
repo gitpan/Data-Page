@@ -44,6 +44,11 @@ METHODS
 
       print "Per page:", $page->entries_per_page, "\n";
 
+  entries_on_this_page
+    This methods returns the number of entries on the current page.
+
+      print "There are ", $page->entries_on_this_page, " entries displayed\n";
+
   current_page
     This method returns the current page number.
 
@@ -87,8 +92,8 @@ METHODS
       }
 
   splice
-    This method takes in an listref, and returns only the values which are
-    on the current page.
+    This method takes in a listref, and returns only the values which are on
+    the current page.
 
       @visible_holidays = $page->splice(\@holidays);
 
