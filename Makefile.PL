@@ -7,7 +7,9 @@ WriteMakefile
           'NAME' => 'Data::Page',
           'VERSION_FROM' => 'lib/Data/Page.pm',
           'PREREQ_PM' => {
-                           'Test::More' => '0.1'
+                           'Test::More' => '0',
+                           'Class::Accessor::Chained::Fast' => '0',
+                           'Test::Exception' => '0'
                          }
         )
 ;

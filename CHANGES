@@ -1,7 +1,11 @@
 Revision history for Perl module Data::Page:
 
+2.00 Wed Oct 20 16:30:04 BST 2004
+	- added accessors, deprecated old constructor style
+        - updated the documentation
+
 1.03 Tue Jul 20 16:12:50 CEST 2004
-	- added skipped_items thanks to Valerio 
+	- added skipped thanks to Valerio 
 
 1.02 Sun Jul 11 16:03:12 IST 2004
 	- NO NEW FUNCTIONALITY OR BUG FIXES.
