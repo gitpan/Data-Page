@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '1.01';
+$VERSION = '1.02';
 
 =head1 NAME
 
@@ -49,8 +49,7 @@ also optionally takes the current page number (which defaults to 1).
 =cut
 
 sub new {
-  my $proto = shift;
-  my $class = ref($proto) || $proto;
+  my $class = shift;
   my $self = {};
 
   $self->{TOTAL_ENTRIES} = shift;

@@ -1,15 +1,16 @@
 --- #YAML:1.0
 name: Data-Page
-version: 1.01
+version: 1.02
+author:
+  - |-
+    Based on code originally by Leo Lapworth, with many changes added by
+    by Leon Brocard <acme@astray.com>.
+abstract: help when paging through sets of results
 license: perl
-distribution_type: module
 requires:
   Test::More: 0.1
-recommends: {}
-build_requires: {}
-conflicts: {}
 provides:
   Data::Page:
     file: lib/Data/Page.pm
-    version: 1.01
-generated_by: Module::Build version 0.21
+    version: 1.02
+generated_by: Module::Build version 0.25

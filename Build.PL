@@ -2,8 +2,9 @@ use Module::Build;
 use strict;
 
 my $build = Module::Build->new(
-  module_name => 'Data::Page',
+  create_makefile_pl => 'traditional',
   license     => 'perl',
+  module_name => 'Data::Page',
   requires    => {
     'Test::More'  => '0.1',
   },

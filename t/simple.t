@@ -1,9 +1,11 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -wT
 
 use strict;
-use Test::More tests => 317;
-use Data::Page;
-ok(1, "Loaded module"); # If we made it this far, we're ok.
+use Test::More tests => 353;
+
+BEGIN {
+    use_ok( 'Data::Page' );
+}
 
 my $name;
 
@@ -17,13 +19,9 @@ foreach my $line (<DATA>) {
   }
 
   my @vals = map { /^undef$/ ? undef : /^''$/ ? '' : $_ } split /\s+/, $line;
-#  warn $line;
 
   my $page = Data::Page->new(@vals[0,1,2]);
-#  warn "         First page: ", $page->first_page, "\n";
-#  warn "          Last page: ", $page->last_page, "\n";
-#  warn "First entry on page: ", $page->first, "\n";
-#  warn " Last entry on page: ", $page->last, "\n";
+  isa_ok( $page, 'Data::Page' );
 
   is($page->first_page, $vals[3], "$name: first page");
   is($page->last_page, $vals[4], "$name: last page");
@@ -41,6 +39,7 @@ foreach my $line (<DATA>) {
 }
 
 my $page = Data::Page->new(0, 10);
+isa_ok( $page, 'Data::Page' );
 my @empty;
 my @spliced = $page->splice(\@empty);
 is(scalar(@spliced), 0, "Splice on empty is empty");

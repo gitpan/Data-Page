@@ -7,4 +7,7 @@ META.yml
 NINJA
 README
 lib/Data/Page.pm
+t/constructor.t
+t/pod-coverage.t
 t/simple.t
+t/pod.t
