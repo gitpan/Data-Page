@@ -4,8 +4,7 @@ Makefile.PL
 MANIFEST
 MANIFEST.SKIP
 META.yml
+NINJA
 README
-SIGNATURE
 lib/Data/Page.pm
-t/signature.t
 t/simple.t

@@ -2,7 +2,7 @@ package Data::Page;
 use Carp;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.18';
+$VERSION = '1.00';
 
 =head1 NAME
 

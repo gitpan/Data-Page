@@ -1,5 +1,8 @@
 Revision history for Perl module Data::Page:
 
+1.00 Mon Nov  3 19:41:21 GMT 2003
+	- bumped up to version 1.00 and added NINJA support
+
 0.18 Mon Jul 14 19:31:08 BST 2003
 	- patches by Ken Williams to simplify the code and fix the
 	  tests
