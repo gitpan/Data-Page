@@ -1,8 +1,11 @@
 Revision history for Perl module Data::Page:
 
+2.01 Wed Oct  8 15:02:25 BST 2008
+    - add human-readable license to the documentation
+
 2.00 Wed Oct 20 16:30:04 BST 2004
 	- added accessors, deprecated old constructor style
-        - updated the documentation
+    - updated the documentation
 
 1.03 Tue Jul 20 16:12:50 CEST 2004
 	- added skipped thanks to Valerio 

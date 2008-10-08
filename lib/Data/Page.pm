@@ -5,7 +5,7 @@ use base 'Class::Accessor::Chained::Fast';
 __PACKAGE__->mk_accessors(qw(total_entries entries_per_page current_page));
 
 use vars qw($VERSION);
-$VERSION = '2.00';
+$VERSION = '2.01';
 
 sub new {
   my $class = shift;
@@ -293,7 +293,9 @@ by Leon Brocard <acme@astray.com>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2000-4, Leon Brocard
+Copyright (C) 2000-8, Leon Brocard
+
+=head1 LICENSE
 
 This module is free software; you can redistribute it or modify it
 under the same terms as Perl itself.
