@@ -5,133 +5,145 @@ use base 'Class::Accessor::Chained::Fast';
 __PACKAGE__->mk_accessors(qw(total_entries entries_per_page current_page));
 
 use vars qw($VERSION);
-$VERSION = '2.01';
+$VERSION = '2.02';
 
 sub new {
-  my $class = shift;
-  my $self  = {};
-  bless($self, $class);
+    my $class = shift;
+    my $self  = {};
+    bless( $self, $class );
 
-  my ($total_entries, $entries_per_page, $current_page) = @_;
-  $self->total_entries($total_entries       || 0);
-  $self->entries_per_page($entries_per_page || 10);
-  $self->current_page($current_page         || 1);
-  return $self;
+    my ( $total_entries, $entries_per_page, $current_page ) = @_;
+    $self->total_entries( $total_entries       || 0 );
+    $self->entries_per_page( $entries_per_page || 10 );
+    $self->current_page( $current_page         || 1 );
+    return $self;
 }
 
 sub entries_per_page {
-  my $self             = shift;
-  my $entries_per_page = $_[0];
-  if (@_) {
-    croak("Fewer than one entry per page!") if $entries_per_page < 1;
-    return $self->_entries_per_page_accessor(@_);
-  }
-  return $self->_entries_per_page_accessor();
+    my $self             = shift;
+    my $entries_per_page = $_[0];
+    if (@_) {
+        croak("Fewer than one entry per page!") if $entries_per_page < 1;
+        return $self->_entries_per_page_accessor(@_);
+    }
+    return $self->_entries_per_page_accessor();
 }
 
 sub current_page {
-  my $self = shift;
-  if (@_) {
-    return $self->_current_page_accessor(@_);
-  }
-  return $self->first_page unless defined $self->_current_page_accessor;
-  return $self->first_page if $self->_current_page_accessor < $self->first_page;
-  return $self->last_page  if $self->_current_page_accessor > $self->last_page;
-  return $self->_current_page_accessor();
+    my $self = shift;
+    if (@_) {
+        return $self->_current_page_accessor(@_);
+    }
+    return $self->first_page unless defined $self->_current_page_accessor;
+    return $self->first_page
+        if $self->_current_page_accessor < $self->first_page;
+    return $self->last_page
+        if $self->_current_page_accessor > $self->last_page;
+    return $self->_current_page_accessor();
 }
 
 sub total_entries {
-  my $self = shift;
-  if (@_) {
-    return $self->_total_entries_accessor(@_);
-  }
-  return $self->_total_entries_accessor;
+    my $self = shift;
+    if (@_) {
+        return $self->_total_entries_accessor(@_);
+    }
+    return $self->_total_entries_accessor;
 }
 
 sub entries_on_this_page {
-  my $self = shift;
+    my $self = shift;
 
-  if ($self->total_entries == 0) {
-    return 0;
-  } else {
-    return $self->last - $self->first + 1;
-  }
+    if ( $self->total_entries == 0 ) {
+        return 0;
+    } else {
+        return $self->last - $self->first + 1;
+    }
 }
 
 sub first_page {
-  my $self = shift;
+    my $self = shift;
 
-  return 1;
+    return 1;
 }
 
 sub last_page {
-  my $self = shift;
+    my $self = shift;
 
-  my $pages = $self->total_entries / $self->entries_per_page;
-  my $last_page;
+    my $pages = $self->total_entries / $self->entries_per_page;
+    my $last_page;
 
-  if ($pages == int $pages) {
-    $last_page = $pages;
-  } else {
-    $last_page = 1 + int($pages);
-  }
+    if ( $pages == int $pages ) {
+        $last_page = $pages;
+    } else {
+        $last_page = 1 + int($pages);
+    }
 
-  $last_page = 1 if $last_page < 1;
-  return $last_page;
+    $last_page = 1 if $last_page < 1;
+    return $last_page;
 }
 
 sub first {
-  my $self = shift;
+    my $self = shift;
 
-  if ($self->total_entries == 0) {
-    return 0;
-  } else {
-    return (($self->current_page - 1) * $self->entries_per_page) + 1;
-  }
+    if ( $self->total_entries == 0 ) {
+        return 0;
+    } else {
+        return ( ( $self->current_page - 1 ) * $self->entries_per_page ) + 1;
+    }
 }
 
 sub last {
-  my $self = shift;
+    my $self = shift;
 
-  if ($self->current_page == $self->last_page) {
-    return $self->total_entries;
-  } else {
-    return ($self->current_page * $self->entries_per_page);
-  }
+    if ( $self->current_page == $self->last_page ) {
+        return $self->total_entries;
+    } else {
+        return ( $self->current_page * $self->entries_per_page );
+    }
 }
 
 sub previous_page {
-  my $self = shift;
+    my $self = shift;
 
-  if ($self->current_page > 1) {
-    return $self->current_page - 1;
-  } else {
-    return undef;
-  }
+    if ( $self->current_page > 1 ) {
+        return $self->current_page - 1;
+    } else {
+        return undef;
+    }
 }
 
 sub next_page {
-  my $self = shift;
+    my $self = shift;
 
-  $self->current_page < $self->last_page ? $self->current_page + 1 : undef;
+    $self->current_page < $self->last_page ? $self->current_page + 1 : undef;
 }
 
 # This method would probably be better named 'select' or 'slice' or
 # something, because it doesn't modify the array the way
 # CORE::splice() does.
 sub splice {
-  my ($self, $array) = @_;
-  my $top = @$array > $self->last ? $self->last : @$array;
-  return () if $top == 0;    # empty
-  return @{$array}[ $self->first - 1 .. $top - 1 ];
+    my ( $self, $array ) = @_;
+    my $top = @$array > $self->last ? $self->last : @$array;
+    return () if $top == 0;    # empty
+    return @{$array}[ $self->first - 1 .. $top - 1 ];
 }
 
 sub skipped {
-  my $self = shift;
+    my $self = shift;
 
-  my $skipped = $self->first - 1;
-  return 0 if $skipped < 0;
-  return $skipped;
+    my $skipped = $self->first - 1;
+    return 0 if $skipped < 0;
+    return $skipped;
+}
+
+sub change_entries_per_page {
+    my ( $self, $new_epp ) = @_;
+
+    use integer;
+    croak("Fewer than one entry per page!") if $new_epp < 1;
+    my $new_page = 1 + ( $self->first / $new_epp );
+    $self->entries_per_page($new_epp);
+    $self->current_page($new_page);
 }
 
 1;
@@ -272,7 +284,19 @@ LIMIT clauses. It is simply $page->first - 1:
   $sth = $dbh->prepare(
     q{SELECT * FROM table ORDER BY rec_date LIMIT ?, ?}
   );
-  $sth->execute($date, $page->skipped, $page->entries_per_page);
+  $sth->execute($page->skipped, $page->entries_per_page);
+
+=head2 change_entries_per_page
+
+This method changes the number of entries per page and the current page number
+such that the L<first> item on the current page will be present on the new page.
+
+ $page->total_entries(50);
+ $page->entries_per_page(20);
+ $page->current_page(3);
+ print $page->first; # 41
+ $page->change_entries_per_page(30);
+ print $page->current_page; # 2 - the page that item 41 will show in
 
 =head1 NOTES
 
@@ -291,9 +315,13 @@ L<Data::Page::Tied>, L<Data::SpreadPagination>.
 Based on code originally by Leo Lapworth, with many changes added by
 by Leon Brocard <acme@astray.com>.
 
+=head1 CONTRIBUTORS
+
+James Laver (ELPENGUIN)
+
 =head1 COPYRIGHT
 
-Copyright (C) 2000-8, Leon Brocard
+Copyright (C) 2000-9, Leon Brocard
 
 =head1 LICENSE
 
